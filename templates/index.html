@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Recipe Formulation</title>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+ <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript">
+    
+setInterval(function () {document.getElementById("get_data").click();}, 15000);
+
+  </script>
+
+<!--   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+ -->
+
+ <script type="text/javascript">
+    $(document).ready(function() {
+      $("#get_data").click(function() {
+        $.getJSON('/readDoor', 
+        // {
+        //   username: $('select[name="user_select"]').val(),
+        // },
+          function(dat) {
+          $("#doorstatus").text(dat['data']);
+          
+         //  document.getElementById("userstats").innerHTML=container.innerHTML;     
+ 
+         // document.getElementById("user_diagnostics").innerHTML=container.innerHTML; 
+         console.log("refreshed");
+        });
+      });
+    });
+  </script>
+
+
+
+
+
+</head>
+
+<body>
+
+
+	
+
+
+	<div id = "container">
+		{%if data["door_opened"] %}
+		<p>Your request to open door has been sent</p>
+		{% endif %}
+	</div>
+
+	<div id = "container">
+		<form action="readDoor">
+			<div class="container">
+			    <div class="form-group">
+					<input type="submit" id="get_data" value="Refresh Door Status">
+				</div>	    
+			</div>
+		</form>
+
+	</div>
+
+
+	<div id = "container">
+		{%if data["data"] %}
+		The current status of door is <label id="doorstatus"> {{data["data"]}}</label>
+		{% endif %}
+	</div>
+
+	<div id = "container">
+		<form action="openDoor" method="post">
+			<div class="container">
+			    <div class="form-group">
+					<input type="submit" value="Open Door">
+				</div>	    
+			</div>
+		</form>
+
+	</div>
+
+	
+
+</body>
